@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "762756030647",
+    "project_id": "cloneplayer-8209a",
+    "storage_bucket": "cloneplayer-8209a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762756030647:android:557adf9bc9a9de7ca7ed32",
+        "android_client_info": {
+          "package_name": "com.clonemusicplayer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762756030647-3so66uhert3agoe2cfu2kjrbena0neng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9hmQzuvuS-okyw7e0iexwytC9IKQza5k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762756030647-3so66uhert3agoe2cfu2kjrbena0neng.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
