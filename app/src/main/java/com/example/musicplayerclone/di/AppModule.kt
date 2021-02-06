@@ -10,12 +10,20 @@ import dagger.hilt.android.internal.managers.ApplicationComponentManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.android.synthetic.*
 import com.example.musicplayerclone.R
+import com.example.musicplayerclone.exoplayer.MusicServiceConnection
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponentManager::class)
 object AppModule {
+
+    @Singleton
+    @Provides
+    fun providesMusicServiceConnection(
+            @ApplicationContext context: Context,
+    )  = MusicServiceConnection(context)
+
 
     @Singleton
     @Provides

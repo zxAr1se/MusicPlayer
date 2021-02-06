@@ -1,7 +1,8 @@
-package com.example.musicplayerclone
+package com.example.musicplayerclone.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.musicplayerclone.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
