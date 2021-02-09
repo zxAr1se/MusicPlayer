@@ -6,16 +6,16 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.internal.managers.ApplicationComponentManager
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.android.synthetic.*
 import com.example.musicplayerclone.R
+import com.example.musicplayerclone.adapter.SwipeSongAdapter
 import com.example.musicplayerclone.exoplayer.MusicServiceConnection
 import dagger.Provides
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponentManager::class)
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
     @Singleton
@@ -24,6 +24,9 @@ object AppModule {
             @ApplicationContext context: Context,
     )  = MusicServiceConnection(context)
 
+    @Singleton
+    @Provides
+    fun provideSongAdapter() = SwipeSongAdapter()
 
     @Singleton
     @Provides

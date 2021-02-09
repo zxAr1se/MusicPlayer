@@ -6,15 +6,26 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.musicplayerclone.R
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.example.musicplayerclone.data.entities.Song
-import kotlinx.android.synthetic.main.list_item.view.*
+import com.example.musicplayerclone.databinding.ListItemBinding
+import javax.inject.Inject
+
 
 abstract class BaseSongAdapter (
     private val layoutId: Int
 ): RecyclerView.Adapter<BaseSongAdapter.SongViewHolder>(){
 
-    class SongViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    class SongViewHolder(private val bind: ListItemBinding): RecyclerView.ViewHolder(bind.root){
+        fun bind(song: Song){
+            bind.tvPrimary.text = "${song.title} - ${song.subtitle}"
+            bind.tvSecondary.text = song.subtitle
+            Glide.with(bind.root.context).load(song.imageUrl).into(bind.ivItemImage)
+
+        }
+    }
+
 
     protected val diffCallback = object : DiffUtil.ItemCallback<Song>(){
         override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {
@@ -34,11 +45,11 @@ abstract class BaseSongAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         return SongViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.list_item,
-                parent,
-                false
-            )
+                ListItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
         )
     }
 

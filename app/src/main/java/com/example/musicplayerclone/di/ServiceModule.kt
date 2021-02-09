@@ -1,9 +1,10 @@
 package com.example.musicplayerclone.di
 
-import android.media.AudioAttributes
+import android.content.Context
 import com.example.musicplayerclone.data.remote.MusicDatabase
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import dagger.Module
