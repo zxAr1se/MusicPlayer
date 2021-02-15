@@ -11,11 +11,12 @@ import com.example.musicplayerclone.R
 import com.example.musicplayerclone.adapter.SwipeSongAdapter
 import com.example.musicplayerclone.exoplayer.MusicServiceConnection
 import dagger.Provides
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ApplicationComponent
+
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ApplicationComponent::class)
 object AppModule {
 
     @Singleton
@@ -34,8 +35,8 @@ object AppModule {
             @ApplicationContext context: Context
     ) = Glide.with(context).setDefaultRequestOptions(
         RequestOptions()
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.ic_image)
+                .error(R.drawable.ic_image)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
     )
 

@@ -13,8 +13,10 @@ import androidx.lifecycle.MutableLiveData
 import com.example.musicplayerclone.other.Constants.NETWORK_ERROR
 import com.example.musicplayerclone.other.Event
 import com.example.musicplayerclone.other.Resource
+import timber.log.Timber
 
-class MusicServiceConnection(
+
+class MusicServiceConnection (
         context: Context
 ) {
     private val _isConnected = MutableLiveData<Event<Resource<Boolean>>>()
@@ -59,6 +61,7 @@ class MusicServiceConnection(
     ) : MediaBrowserCompat.ConnectionCallback(){
 
         override fun onConnected() {
+            Timber.d("CONNECTED")
             mediaController = MediaControllerCompat(context, mediaBrowser.sessionToken).apply {
                 registerCallback(MediaControllerCallback())
             }
@@ -66,12 +69,14 @@ class MusicServiceConnection(
         }
 
         override fun onConnectionSuspended() {
+            Timber.d("SUSPENDED")
             _isConnected.postValue(Event(Resource.error(
                     "The connection was suspended", false
             )))
         }
 
         override fun onConnectionFailed() {
+            Timber.d("FAILED")
             _isConnected.postValue(Event(Resource.error(
                     "Couldn`t connect to media browser", false
             )))

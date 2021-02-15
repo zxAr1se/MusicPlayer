@@ -1,5 +1,6 @@
 package com.example.musicplayerclone.ui.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,13 +9,12 @@ import com.example.musicplayerclone.exoplayer.MusicService
 import com.example.musicplayerclone.exoplayer.MusicServiceConnection
 import com.example.musicplayerclone.exoplayer.currentPlaybackPosition
 import com.example.musicplayerclone.other.Constants.UPDATE_PLAYER_POSITION_INTERVAL
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class SongViewModel @Inject constructor(
+
+class SongViewModel @ViewModelInject constructor(
     musicServiceConnection: MusicServiceConnection
 ) : ViewModel(){
 

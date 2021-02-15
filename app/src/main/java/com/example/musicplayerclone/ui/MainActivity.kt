@@ -6,7 +6,6 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -20,20 +19,22 @@ import com.example.musicplayerclone.exoplayer.toSong
 import com.example.musicplayerclone.other.Status
 import com.example.musicplayerclone.ui.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+    val mainViewModel: MainViewModel by viewModels()
 
-    private val mainViewModel: MainViewModel by viewModels()
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var glide: RequestManager
 
     @Inject
     lateinit var swipeSongAdapter: SwipeSongAdapter
-
-    private lateinit var binding: ActivityMainBinding
 
     private lateinit var navHostFragment: NavHostFragment
 
@@ -44,14 +45,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
 
         subscribeToObservers()
 
         binding.vpSong.adapter = swipeSongAdapter
 
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
 
         binding.vpSong.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
@@ -76,13 +78,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             )
         }
 
-        navHostFragment.findNavController().addOnDestinationChangedListener{ _, destination, _ ->
-            when(destination.id){
-                R.id.songFragment -> hideBottomBar()
-                R.id.homeFragment -> showBottomBar()
-                else -> showBottomBar()
-            }
-        }
+      navHostFragment.findNavController().addOnDestinationChangedListener{ _, destination, _ ->
+          when(destination.id){
+              R.id.songFragment -> hideBottomBar()
+              R.id.homeFragment -> showBottomBar()
+              else -> showBottomBar()
+          }
+      }
     }
 
     private fun hideBottomBar(){
@@ -160,5 +162,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

@@ -2,6 +2,7 @@ package com.example.musicplayerclone.ui.viewmodel
 
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_ID
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,11 +13,10 @@ import com.example.musicplayerclone.exoplayer.isPlaying
 import com.example.musicplayerclone.exoplayer.isPrepared
 import com.example.musicplayerclone.other.Constants.MEDIA_ROOT_ID
 import com.example.musicplayerclone.other.Resource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class MainViewModel @Inject constructor(
+
+
+class MainViewModel @ViewModelInject constructor(
         private val musicServiceConnection: MusicServiceConnection
 ) : ViewModel() {
     private val _mediaItems = MutableLiveData<Resource<List<Song>>>()

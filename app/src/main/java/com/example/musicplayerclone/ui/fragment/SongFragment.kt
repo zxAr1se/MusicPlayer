@@ -2,7 +2,9 @@ package com.example.musicplayerclone.ui.fragment
 
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,14 +24,15 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SongFragment : Fragment(R.layout.fragment_song) {
+class SongFragment : Fragment() {
 
     @Inject
     lateinit var glide: RequestManager
 
-    private lateinit var binding: FragmentSongBinding
+    private var _binding: FragmentSongBinding? = null
+    private val binding get() = _binding!!
 
-    private val mainViewModel: MainViewModel by viewModels()
+    private lateinit var mainViewModel: MainViewModel
     private val songViewModel: SongViewModel by viewModels()
 
     private var curPlayingSong: Song? = null
@@ -38,9 +41,20 @@ class SongFragment : Fragment(R.layout.fragment_song) {
 
     private var shouldUpdateSeekbar = true
 
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentSongBinding.inflate(inflater, container,false)
+
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentSongBinding.bind(view)
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+
 
         subscribeToObserves()
 
@@ -128,5 +142,10 @@ class SongFragment : Fragment(R.layout.fragment_song) {
     private fun setCurPlayingTimeToTextView(ms: Long){
         val dateFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
         binding.tvCurTime.text = dateFormat.format(ms)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

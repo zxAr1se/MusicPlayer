@@ -19,7 +19,7 @@ class MusicNotificationManager(
         private val context: Context,
         sessionToken: MediaSessionCompat.Token,
         notificationListener: PlayerNotificationManager.NotificationListener,
-        private val newSongCallbak: () -> Unit
+        private val newSongCallbaсk: () -> Unit
 ) {
 
     private val notificationManager: PlayerNotificationManager
@@ -49,7 +49,7 @@ class MusicNotificationManager(
     ): PlayerNotificationManager.MediaDescriptionAdapter{
 
         override fun getCurrentContentTitle(player: Player): CharSequence {
-            newSongCallbak()
+            newSongCallbaсk()
             return mediaController.metadata.description.title.toString()
         }
 
@@ -57,7 +57,7 @@ class MusicNotificationManager(
             return mediaController.sessionActivity
         }
 
-        override fun getCurrentContentText(player: Player): CharSequence? {
+        override fun getCurrentContentText(player: Player): CharSequence {
             return mediaController.metadata.description.subtitle.toString()
         }
 
