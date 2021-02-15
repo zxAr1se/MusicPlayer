@@ -29,7 +29,9 @@ android {
     buildFeatures {
         viewBinding true
     }
-
+    dataBinding {
+     enabled = true
+    }
     buildTypes {
         release {
             manifestPlaceholders API_KEY: 'AIzaSyANdpnwKF0Z_Aoda_xWPpgkdFXtvkWHGzs'

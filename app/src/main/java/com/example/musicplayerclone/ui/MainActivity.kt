@@ -6,6 +6,7 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var swipeSongAdapter: SwipeSongAdapter
 
-    private lateinit var navHostFragment: NavHostFragment
+    private lateinit var navController: NavController
 
     private var curPlayingSong: Song? = null
 
@@ -46,14 +47,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+
+        binding.apply {
+            setContentView(binding.root)
+            navController = (supportFragmentManager
+                    .findFragmentById(navHostFragment.id) as NavHostFragment)
+                    .navController
+        }
 
         subscribeToObservers()
 
         binding.vpSong.adapter = swipeSongAdapter
-
 
         binding.vpSong.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
@@ -73,12 +78,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         swipeSongAdapter.setItemClickListener {
-             navHostFragment.findNavController().navigate(
+             navController.navigate(
                     R.id.globalActionToSongFragment
             )
         }
 
-      navHostFragment.findNavController().addOnDestinationChangedListener{ _, destination, _ ->
+      navController.addOnDestinationChangedListener{ _, destination, _ ->
           when(destination.id){
               R.id.songFragment -> hideBottomBar()
               R.id.homeFragment -> showBottomBar()
